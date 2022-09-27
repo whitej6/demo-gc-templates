@@ -1,4 +1,4 @@
-from nautobot_golden_config.jobs import IntendedJob, ComplianceJob, commit_check
+from nautobot_golden_config.jobs import commit_check
 from nautobot_golden_config.utilities.git import GitRepo
 from nautobot_golden_config.utilities.helper import get_job_filter
 from nautobot_golden_config.nornir_plays.config_intended import config_intended
@@ -20,7 +20,22 @@ def get_refreshed_repos(job, repo_type, data=None):
         repos.append(repo)
     return repos
 
-class RefreshRepos(ComplianceJob):
+class RefreshRepos(Job, FormEntry):
+    """Job to to run the compliance engine."""
+
+    tenant_group = FormEntry.tenant_group
+    tenant = FormEntry.tenant
+    region = FormEntry.region
+    site = FormEntry.site
+    rack_group = FormEntry.rack_group
+    rack = FormEntry.rack
+    role = FormEntry.role
+    manufacturer = FormEntry.manufacturer
+    platform = FormEntry.platform
+    device_type = FormEntry.device_type
+    device = FormEntry.device
+    tag = FormEntry.tag
+    debug = FormEntry.debug
     class Meta:
         name = "Only Refreshed Repos for Golden Config."
 
@@ -32,7 +47,22 @@ class RefreshRepos(ComplianceJob):
         get_refreshed_repos(job_obj=self, repo_type="backup", data=data)
 
 
-class PatchedComplianceJob(ComplianceJob):
+class ComplianceJob(Job, FormEntry):
+    """Job to to run the compliance engine."""
+
+    tenant_group = FormEntry.tenant_group
+    tenant = FormEntry.tenant
+    region = FormEntry.region
+    site = FormEntry.site
+    rack_group = FormEntry.rack_group
+    rack = FormEntry.rack
+    role = FormEntry.role
+    manufacturer = FormEntry.manufacturer
+    platform = FormEntry.platform
+    device_type = FormEntry.device_type
+    device = FormEntry.device
+    tag = FormEntry.tag
+    debug = FormEntry.debug
     refresh_repos = BooleanVar("Checked will refresh repos")
     class Meta:
         name = "Patched Compliance Job."
@@ -51,7 +81,22 @@ class PatchedComplianceJob(ComplianceJob):
         config_compliance(self, self.data)
 
 
-class PatchedIntendedJob(IntendedJob):
+class PatchedIntendedJob(Job, FormEntry):
+    """Job to to run generation of intended configurations."""
+
+    tenant_group = FormEntry.tenant_group
+    tenant = FormEntry.tenant
+    region = FormEntry.region
+    site = FormEntry.site
+    rack_group = FormEntry.rack_group
+    rack = FormEntry.rack
+    role = FormEntry.role
+    manufacturer = FormEntry.manufacturer
+    platform = FormEntry.platform
+    device_type = FormEntry.device_type
+    device = FormEntry.device
+    tag = FormEntry.tag
+    debug = FormEntry.debug
     class Meta:
         name = "Patched Intended Job."
 
