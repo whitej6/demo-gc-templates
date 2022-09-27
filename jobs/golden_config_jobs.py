@@ -119,7 +119,7 @@ class PatchedIntendedJob(Job, FormEntry):
         config_intended(self, self.data)
         now = datetime.now()
         for intended_repo in self.repos:
-            LOGGER.debug("Push new intended configs to repo %s.", intended_repo.url)
+            self.log_info("Push new intended configs to repo %s.", intended_repo.url)
             intended_repo.commit_with_added(f"INTENDED CONFIG CREATION JOB - {now}")
             intended_repo.push()
 
