@@ -22,7 +22,7 @@ def get_refreshed_repos(job_obj, repo_type, data=None):
         job_obj.log_info(f"Pull Repo for site {site[0]}.")
         repo = GitRepository.objects.get(slug=f"{repo_type}-{site[0]}")
         ensure_git_repository(repo, job_obj.job_result)
-        repos.append(GitRepo(repository_record))
+        repos.append(GitRepo(repo))
     return repos
 
 class RefreshRepos(Job, FormEntry):
