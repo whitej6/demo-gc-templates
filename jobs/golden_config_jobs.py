@@ -20,6 +20,23 @@ def get_refreshed_repos(job, repo_type, data=None):
         repos.append(repo)
     return repos
 
+class FormEntry:  # pylint disable=too-few-public-method
+    """Class definition to use as Mixin for form definitions."""
+
+    tenant_group = MultiObjectVar(model=TenantGroup, required=False)
+    tenant = MultiObjectVar(model=Tenant, required=False)
+    region = MultiObjectVar(model=Region, required=False)
+    site = MultiObjectVar(model=Site, required=False)
+    rack_group = MultiObjectVar(model=RackGroup, required=False)
+    rack = MultiObjectVar(model=Rack, required=False)
+    role = MultiObjectVar(model=DeviceRole, required=False)
+    manufacturer = MultiObjectVar(model=Manufacturer, required=False)
+    platform = MultiObjectVar(model=Platform, required=False)
+    device_type = MultiObjectVar(model=DeviceType, required=False, display_field="display_name")
+    device = MultiObjectVar(model=Device, required=False)
+    tag = MultiObjectVar(model=Tag, required=False)
+    debug = BooleanVar(description="Enable for more verbose debug logging")
+
 class RefreshRepos(Job, FormEntry):
     """Job to to run the compliance engine."""
 
