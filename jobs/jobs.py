@@ -5,7 +5,7 @@ from nautobot_golden_config.nornir_plays.config_intended import config_intended
 from nautobot_golden_config.nornir_plays.config_compliance import config_compliance
 
 from nautobot.extras.datasources.git import ensure_git_repository
-from nautobot.extras.jobs import BooleanVar
+from nautobot.extras.jobs import BooleanVar, Job
 
 name = "Patched Golden Config Jobs"
 
@@ -20,7 +20,7 @@ def get_refreshed_repos(job, repo_type, data=None):
         repos.append(repo)
     return repos
 
-class RefreshRepos(ComplianceJob):
+class RefreshRepos(Job, ComplianceJob):
     class Meta:
         name = "Only Refreshed Repos for Golden Config."
 
@@ -32,7 +32,7 @@ class RefreshRepos(ComplianceJob):
         get_refreshed_repos(job_obj=self, repo_type="backup", data=data)
 
 
-class PatchedComplianceJob(ComplianceJob):
+class PatchedComplianceJob(Job, ComplianceJob):
     refresh_repos = BooleanVar("Checked will refresh repos")
 
     @commit_check
@@ -49,7 +49,7 @@ class PatchedComplianceJob(ComplianceJob):
         config_compliance(self, self.data)
 
 
-class PatchedIntendedJob(IntendedJob):
+class PatchedIntendedJob(Job, IntendedJob):
 
     @commit_check
     def run(self, data, commit):  # pylint: disable=too-many-branches
