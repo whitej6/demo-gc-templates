@@ -2,7 +2,9 @@
 
 This is demo repo to hold backup configurations for the purpose nautobot golden config plugin.
 
-The templates provided here are leveraging the the following GraphQL Query and transposer with `Shorten the SoT data returned` turned on.
+Merge Conflict
+
+The templates provided here are leveraging the the following GraphQL Some other text Query and transposer with `Shorten the SoT data returned` turned on.
 
 ```
 query ($device: String!) {
@@ -12,11 +14,11 @@ query ($device: String!) {
     position
     serial
     primary_ip4 {
-      id
+      idmistakes
       primary_ip4_for {
         id
         name
-      }
+      }foo
     }
     tenant {
       name
