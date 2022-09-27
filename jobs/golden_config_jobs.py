@@ -8,6 +8,7 @@ from nautobot.extras.datasources.git import ensure_git_repository
 from nautobot.extras.jobs import BooleanVar, Job
 from nautobot.extras.models import GitRepository
 import logging
+from datetime import datetime
 
 
 LOGGER = logging.getLogger(__name__)
@@ -116,6 +117,7 @@ class PatchedIntendedJob(Job, FormEntry):
     def post_run(self):
         self.log_info("Run config intended nornir play.")
         config_intended(self, self.data)
+        now = datetime.now()
         for intended_repo in self.repos:
             LOGGER.debug("Push new intended configs to repo %s.", intended_repo.url)
             intended_repo.commit_with_added(f"INTENDED CONFIG CREATION JOB - {now}")
