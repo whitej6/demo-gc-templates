@@ -6,6 +6,7 @@ from nautobot_golden_config.nornir_plays.config_compliance import config_complia
 
 from nautobot.extras.datasources.git import ensure_git_repository
 from nautobot.extras.jobs import BooleanVar, Job
+from nautobot.extras.models import GitRepository
 import logging
 
 
