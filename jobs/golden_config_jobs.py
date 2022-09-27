@@ -67,4 +67,4 @@ class PatchedIntendedJob(Job, IntendedJob):
             intended_repo.commit_with_added(f"INTENDED CONFIG CREATION JOB - {now}")
             intended_repo.push()
 
-jobs = [PatchedComplianceJob, PatchedIntendedJob, RefreshRepos]
+# jobs = [PatchedComplianceJob, PatchedIntendedJob, RefreshRepos]
