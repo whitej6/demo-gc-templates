@@ -47,9 +47,9 @@ class RefreshRepos(Job, FormEntry):
 
     @commit_check
     def run(self, data, commit):  # pylint: disable=too-many-branches
-        LOGGER.debug("Pull Intended config repos.")
+        self.log_info("Pull Intended config repos.")
         get_refreshed_repos(self, repo_type="intended", data=data)
-        LOGGER.debug("Pull Backup config repos.")
+        self.log_info("Pull Backup config repos.")
         get_refreshed_repos(self, repo_type="backup", data=data)
 
 
@@ -76,14 +76,11 @@ class ComplianceJob(Job, FormEntry):
     @commit_check
     def run(self, data, commit):  # pylint: disable=too-many-branches
         if data.get("refresh_repos"):
-            LOGGER.debug("Pull Intended config repos.")
+            self.log_info("Pull Intended config repos.")
             get_refreshed_repos(self, repo_type="intended", data=data)
-            LOGGER.debug("Pull Backup config repos.")
+            self.log_info("Pull Backup config repos.")
             get_refreshed_repos(self, repo_type="backup", data=data)
-        self.data = data
-
-    def post_run(self):
-        LOGGER.debug("Starting Compliance.")
+        self.log_info("Starting Compliance.")
         config_compliance(self, self.data)
 
 
@@ -108,19 +105,14 @@ class PatchedIntendedJob(Job, FormEntry):
 
     @commit_check
     def run(self, data, commit):  # pylint: disable=too-many-branches
-        LOGGER.debug("Pull Intended config repos.")
-        self.repos = get_refreshed_repos(self, repo_type="intended", data=data)
-        LOGGER.debug("Pull Jinja template repos.")
+        self.log_info("Pull Intended config repos.")
+        repos = get_refreshed_repos(self, repo_type="intended", data=data)
+        self.log_info("Pull Jinja template repos.")
         _get_refreshed_repos(self, repo_type="jinja_repository", data=data)
-        self.data = data
-
-    def post_run(self):
         self.log_info("Run config intended nornir play.")
-        config_intended(self, self.data)
+        config_intended(self, data)
         now = datetime.now()
-        for intended_repo in self.repos:
+        for intended_repo in repos:
             self.log_info("Push new intended configs to repo %s.", intended_repo.url)
             intended_repo.commit_with_added(f"INTENDED CONFIG CREATION JOB - {now}")
             intended_repo.push()
-
-# jobs = [PatchedComplianceJob, PatchedIntendedJob, RefreshRepos]
