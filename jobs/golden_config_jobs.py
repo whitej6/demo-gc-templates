@@ -46,9 +46,9 @@ class RefreshRepos(Job, FormEntry):
     @commit_check
     def run(self, data, commit):  # pylint: disable=too-many-branches
         LOGGER.debug("Pull Intended config repos.")
-        get_refreshed_repos(job_obj=self, repo_type="intended", data=data)
+        get_refreshed_repos(self, repo_type="intended", data=data)
         LOGGER.debug("Pull Backup config repos.")
-        get_refreshed_repos(job_obj=self, repo_type="backup", data=data)
+        get_refreshed_repos(self, repo_type="backup", data=data)
 
 
 class ComplianceJob(Job, FormEntry):
@@ -75,9 +75,9 @@ class ComplianceJob(Job, FormEntry):
     def run(self, data, commit):  # pylint: disable=too-many-branches
         if data.get("refresh_repos"):
             LOGGER.debug("Pull Intended config repos.")
-            get_refreshed_repos(job_obj=self, repo_type="intended", data=data)
+            get_refreshed_repos(self, repo_type="intended", data=data)
             LOGGER.debug("Pull Backup config repos.")
-            get_refreshed_repos(job_obj=self, repo_type="backup", data=data)
+            get_refreshed_repos(self, repo_type="backup", data=data)
         self.data = data
 
     def post_run(self):
@@ -107,9 +107,9 @@ class PatchedIntendedJob(Job, FormEntry):
     @commit_check
     def run(self, data, commit):  # pylint: disable=too-many-branches
         LOGGER.debug("Pull Intended config repos.")
-        self.repos = get_refreshed_repos(job_obj=self, repo_type="intended", data=data)
+        self.repos = get_refreshed_repos(self, repo_type="intended", data=data)
         LOGGER.debug("Pull Jinja template repos.")
-        _get_refreshed_repos(job_obj=self, repo_type="jinja_repository", data=data)
+        _get_refreshed_repos(self, repo_type="jinja_repository", data=data)
         self.data = data
 
     def post_run(self):
