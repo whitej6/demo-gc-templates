@@ -44,7 +44,7 @@ class PatchedComplianceJob(Job, ComplianceJob):
             get_refreshed_repos(job_obj=self, repo_type="backup", data=data)
         self.data = data
 
-    def post_run(self)
+    def post_run(self):
         LOGGER.debug("Starting Compliance.")
         config_compliance(self, self.data)
 
@@ -59,7 +59,7 @@ class PatchedIntendedJob(Job, IntendedJob):
         _get_refreshed_repos(job_obj=self, repo_type="jinja_repository", data=data)
         self.data = data
 
-    def post_run(self)
+    def post_run(self):
         LOGGER.debug("Run config intended nornir play.")
         config_intended(self, self.data)
         for intended_repo in self.repos:
