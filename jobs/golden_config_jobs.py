@@ -15,11 +15,11 @@ LOGGER = logging.getLogger(__name__)
 name = "Patched Golden Config Jobs"
 
 
-def get_refreshed_repos(job, repo_type, data=None):
+def get_refreshed_repos(job_obj, repo_type, data=None):
     site_slugs = get_job_filter(data).values_list("site__slug").distinct()
     repos = []
     for site in site_slugs:
-        job.log_info(f"Pull Repo for site {site[0]}.")
+        job_obj.log_info(f"Pull Repo for site {site[0]}.")
         repo = GitRepository.objects.get(slug=f"{repo_type}-{site[0]}")
         ensure_git_repository(repo, job_obj.job_result)
         repos.append(repo)
