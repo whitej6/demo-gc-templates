@@ -34,6 +34,8 @@ class RefreshRepos(ComplianceJob):
 
 class PatchedComplianceJob(ComplianceJob):
     refresh_repos = BooleanVar("Checked will refresh repos")
+    class Meta:
+        name = "Patched Compliance Job."
 
     @commit_check
     def run(self, data, commit):  # pylint: disable=too-many-branches
@@ -50,6 +52,8 @@ class PatchedComplianceJob(ComplianceJob):
 
 
 class PatchedIntendedJob(IntendedJob):
+    class Meta:
+        name = "Patched Intended Job."
 
     @commit_check
     def run(self, data, commit):  # pylint: disable=too-many-branches
