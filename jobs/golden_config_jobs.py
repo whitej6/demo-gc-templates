@@ -1,11 +1,11 @@
-from nautobot_golden_config.jobs import commit_check
+from nautobot_golden_config.jobs import commit_check, FormEntry
 from nautobot_golden_config.utilities.git import GitRepo
 from nautobot_golden_config.utilities.helper import get_job_filter
 from nautobot_golden_config.nornir_plays.config_intended import config_intended
 from nautobot_golden_config.nornir_plays.config_compliance import config_compliance
 
 from nautobot.extras.datasources.git import ensure_git_repository
-from nautobot.extras.jobs import BooleanVar
+from nautobot.extras.jobs import BooleanVar, Job
 
 name = "Patched Golden Config Jobs"
 
@@ -19,23 +19,6 @@ def get_refreshed_repos(job, repo_type, data=None):
         ensure_git_repository(repo, job_obj.job_result)
         repos.append(repo)
     return repos
-
-class FormEntry:  # pylint disable=too-few-public-method
-    """Class definition to use as Mixin for form definitions."""
-
-    tenant_group = MultiObjectVar(model=TenantGroup, required=False)
-    tenant = MultiObjectVar(model=Tenant, required=False)
-    region = MultiObjectVar(model=Region, required=False)
-    site = MultiObjectVar(model=Site, required=False)
-    rack_group = MultiObjectVar(model=RackGroup, required=False)
-    rack = MultiObjectVar(model=Rack, required=False)
-    role = MultiObjectVar(model=DeviceRole, required=False)
-    manufacturer = MultiObjectVar(model=Manufacturer, required=False)
-    platform = MultiObjectVar(model=Platform, required=False)
-    device_type = MultiObjectVar(model=DeviceType, required=False, display_field="display_name")
-    device = MultiObjectVar(model=Device, required=False)
-    tag = MultiObjectVar(model=Tag, required=False)
-    debug = BooleanVar(description="Enable for more verbose debug logging")
 
 class RefreshRepos(Job, FormEntry):
     """Job to to run the compliance engine."""
