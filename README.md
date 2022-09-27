@@ -2,11 +2,11 @@
 
 This is demo repo to hold backup configurations for the purpose nautobot golden config plugin.
 
-I shuold not be here
+Merge Conflict
 
-The templates provided here are leveraging the the following GraphQL Query and transposer with `Shorten the SoT data returned` turned on.
+The templates provided here are leveraging the the following GraphQL Some other text Query and transposer with `Shorten the SoT data returned` turned on.
 
-```
+```hcl
 query ($device: String!) {
   devices(name: $device) {
     config_context
@@ -14,7 +14,7 @@ query ($device: String!) {
     position
     serial
     primary_ip4 {
-      id
+      idmistakes
       primary_ip4_for {
         id
         name
@@ -99,7 +99,8 @@ query ($device: String!) {
 ```
 
 Transposer
-```
+
+```python
 """Details."""
 import ipaddress
 # Can take the returned data from the graphql query and can modify the data before sending to the jinja2 template.
