@@ -2,6 +2,8 @@
 
 This is demo repo to hold backup configurations for the purpose nautobot golden config plugin.
 
+I shuold not be here
+
 The templates provided here are leveraging the the following GraphQL Query and transposer with `Shorten the SoT data returned` turned on.
 
 ```
@@ -16,7 +18,7 @@ query ($device: String!) {
       primary_ip4_for {
         id
         name
-      }
+      foo}bar
     }
     tenant {
       name
