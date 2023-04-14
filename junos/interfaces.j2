@@ -1,5 +1,5 @@
 {% for interface in interfaces %}
-{% if 'ge-' in interface["name"] %}
+{% if 'ge-' in interface["name"] or 'et-' in interface["name"] %}
 {% include "./junos/_physical.j2" %}
 {% endif %}
 {% endfor %}
